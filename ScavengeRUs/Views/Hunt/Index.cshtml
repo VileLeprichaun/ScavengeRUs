@@ -11,6 +11,9 @@
     <a asp-controller="locations" asp-action="Index" style="padding-right: 3px">Manage All Tasks</a> |
     <a asp-controller="User" asp-action="Manage" style="padding-left: 3px">Back to Admin Portal</a>
 </p>
+<p>
+    
+</p>
 <table id="myTable" class="table">
     <thead>
         <tr>
@@ -41,7 +44,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.HuntLocations)
             </th>
-            
             <th></th>
         </tr>
     </thead>
@@ -81,22 +83,26 @@
                 @Html.DisplayFor(modelItem => item.HuntStatus)
             
                     @{
+                        Hunt hunt = new Hunt();
                         var huntStatus = "";
-                        
+
                         if (DateTime.Now < item.StartDate)
                         {
                             huntStatus = "Pending";
+                            hunt.HuntStatus = huntStatus;
                         }
                         else if(DateTime.Now >= item.StartDate && DateTime.Now < item.EndDate)
                         {
                             huntStatus = "Active";
+                            hunt.HuntStatus = huntStatus;
                         }
                         else
                         {
                             huntStatus = "Ended";
+                            hunt.HuntStatus = huntStatus;
                         }
-                        
                     }
+
                     @Html.DisplayFor(modelItem => huntStatus)
             </td>
             <td>
