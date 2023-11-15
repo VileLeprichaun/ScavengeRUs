@@ -42,6 +42,17 @@
  * An example use can be seen in Questions/Index.cshtml.
  */
 
+// Used to create the filters for the User and Hunt tables
+// https://datatables.net/download/
+$(document).ready(function () {
+    $('#myTable').DataTable({
+        "scrolly": "450px",
+        "scrollCollapse": true,
+        "paging": true
+    });
+
+});
+
 /*
  * Get the user's location async.
  * On success, callbackSuccess is called with a GeolocationCoordinates object describing the coordinates of the user at highest
