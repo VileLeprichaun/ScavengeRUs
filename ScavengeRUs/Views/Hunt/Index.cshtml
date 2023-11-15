@@ -80,26 +80,24 @@
                     @Html.DisplayFor(modelItem => timeRemaining)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.HuntStatus)
             
                     @{
-                        Hunt hunt = new Hunt();
                         var huntStatus = "";
 
                         if (DateTime.Now < item.StartDate)
                         {
                             huntStatus = "Pending";
-                            hunt.HuntStatus = huntStatus;
+                            item.HuntStatus = huntStatus;
                         }
                         else if(DateTime.Now >= item.StartDate && DateTime.Now < item.EndDate)
                         {
                             huntStatus = "Active";
-                            hunt.HuntStatus = huntStatus;
+                            item.HuntStatus = huntStatus;
                         }
                         else
                         {
                             huntStatus = "Ended";
-                            hunt.HuntStatus = huntStatus;
+                            item.HuntStatus = huntStatus;
                         }
                     }
 
