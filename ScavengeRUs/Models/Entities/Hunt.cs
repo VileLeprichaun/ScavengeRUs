@@ -15,6 +15,7 @@ namespace ScavengeRUs.Models.Entities
         {
             CreationDate = DateTime.Now;
         }
+
         public int Id { get; set; }
         public DateTime CreationDate { get; set; }
         [DisplayName("Title"), Required]

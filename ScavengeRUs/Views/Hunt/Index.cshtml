@@ -11,7 +11,9 @@
     <a asp-controller="locations" asp-action="Index" style="padding-right: 3px">Manage All Tasks</a> |
     <a asp-controller="User" asp-action="Manage" style="padding-left: 3px">Back to Admin Portal</a>
 </p>
-<table class="table">
+<p>
+</p>
+<table id="hunt-table" class="table">
     <thead>
         <tr>
 @*            <th>
@@ -40,6 +42,16 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.HuntLocations)
+            </th>
+            
+            
+            <th>
+                <select class="table-filter" id="hunt-status" onchange="filterRows()">
+                    <option value="">Show all</option>
+                    <option value="Active">Active</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Ended">Ended</option>
+                </select>
             </th>
         </tr>
     </thead>
@@ -106,25 +118,27 @@
             </td>
 
             <td>
-                @Html.DisplayFor(modelItem => item.HuntStatus)
             
                     @{
                         var huntStatus = "";
-                        
+
                         if (DateTime.Now < item.StartDate)
                         {
                             huntStatus = "Pending";
+                            item.HuntStatus = huntStatus;
                         }
                         else if(DateTime.Now >= item.StartDate && DateTime.Now < item.EndDate)
                         {
                             huntStatus = "Active";
+                            item.HuntStatus = huntStatus;
                         }
                         else
                         {
                             huntStatus = "Ended";
+                            item.HuntStatus = huntStatus;
                         }
-                        
                     }
+
                     @Html.DisplayFor(modelItem => huntStatus)
             </td>
             <td>
@@ -151,7 +165,7 @@
                                                     @Html.ActionLink("Delete Hunt", "Delete", new { id = item.Id })
                                                 </p>
                         }
-                    }
+                        }
             </td>
         </tr>
 }
