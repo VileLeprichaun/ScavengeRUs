@@ -55,6 +55,25 @@ namespace ScavengeRUs.Controllers
             if (ModelState.IsValid)
             {
                 hunt.CreationDate = DateTime.Now;
+
+                var huntStatus = "";
+
+                if (DateTime.Now < hunt.StartDate)
+                {
+                    huntStatus = "Pending";
+                    hunt.HuntStatus = huntStatus;
+                }
+                else if (DateTime.Now >= hunt.StartDate && DateTime.Now < hunt.EndDate)
+                {
+                    huntStatus = "Active";
+                    hunt.HuntStatus = huntStatus;
+                }
+                else
+                {
+                    huntStatus = "Ended";
+                    hunt.HuntStatus = huntStatus;
+                }
+
                 await _huntRepo.CreateAsync(hunt);
                 return RedirectToAction("Index");
             }

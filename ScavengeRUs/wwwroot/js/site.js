@@ -45,13 +45,50 @@
 // Used to create the filters for the User and Hunt tables
 // https://datatables.net/download/
 $(document).ready(function () {
-    $('#myTable').DataTable({
+    $('#hunt-table').DataTable({
         "scrolly": "450px",
         "scrollCollapse": true,
-        "paging": true
+        "paging": true,
+        "columns": [
+            { "CreationDate": "first", "orderable": true },
+            { "Title": "second", "orderable": true },
+            { "Start Date/Time": "third", "orderable": true },
+            { "End Date/Time": "fourth", "orderable": true },
+            { "Time Remaining": "fifth", "orderable": true },
+            { "Status": "sixth", "orderable": false },
+            { "Players": "seventh", "orderable": true },
+            { "Tasks": "eighth", "orderable": true },
+            { "Manage": "ninth", "orderable": false },
+        ]
     });
-
 });
+
+$(document).ready(function () {
+    $('#user-table').DataTable({
+        "scrolly": "450px",
+        "scrollCollapse": true,
+        "paging": true,
+    });
+});
+
+function filterRows() {
+    var statusFilter = document.getElementById("hunt-status").value.toUpperCase();
+    var table = document.getElementById("hunt-table");
+    var rows = table.getElementsByTagName("tr");
+
+    for (var i = 1; i < rows.length; i++) { // Start from 1 to skip the header row
+        var cell = rows[i].getElementsByTagName("td")[5]; // Assuming "Status" is the sixth column (index 5)
+        if (cell) {
+            var cellText = cell.textContent || cell.innerText;
+            if (statusFilter === "" || cellText.toUpperCase().indexOf(statusFilter) > -1) {
+                rows[i].style.display = "";
+
+            } else {
+                rows[i].style.display = "none";
+            }
+        }
+    }
+}
 
 /*
  * Get the user's location async.

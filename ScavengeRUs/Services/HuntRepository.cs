@@ -224,7 +224,7 @@ namespace ScavengeRUs.Services
             existingHunt.Theme = hunt.Theme;
             existingHunt.StartDate = hunt.StartDate;
             existingHunt.EndDate = hunt.EndDate;
-
+            existingHunt.HuntStatus = hunt.HuntStatus;
             _db.SaveChanges();
         }
     }
