@@ -43,9 +43,16 @@
             <th>
                 @Html.DisplayNameFor(model => model.HuntLocations)
             </th>
-           
             
-            <th></th>
+            
+            <th>
+                <select class="table-filter" id="hunt-status" onchange="filterRows()">
+                    <option value="">Show all</option>
+                    <option value="Active">Active</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Ended">Ended</option>
+                </select>
+            </th>
         </tr>
     </thead>
     <tbody>
