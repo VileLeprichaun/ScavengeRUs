@@ -30,7 +30,7 @@
                 @Html.DisplayNameFor(model => model.EndDate)
             </th>
             <th>
-                Time Remaining
+                <p>Time Remaining</p>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.HuntStatus)
@@ -41,8 +41,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.HuntLocations)
             </th>
-            
-            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -63,20 +61,50 @@
             <td>
                 @Html.DisplayFor(modelItem => item.EndDate)
             </td>
+
             <td>
-                    @{
-                        var timeRemaining = (item.EndDate - DateTime.Now).ToString();
-                        if (TimeSpan.Parse(timeRemaining).Seconds<0)
+                <div class="timer" data-start="@item.StartDate.ToString("")" data-end="@item.EndDate.ToString("")"></div>
+                <script>
+                    // Get all elements with class "timer"
+                    var timerElements = document.getElementsByClassName("timer");
+
+                    // Loop through each timer element
+                    Array.from(timerElements).forEach(function (element) 
+                    {
+                        // Get the EndDate from the data attribute
+                        var endDate = new Date(element.dataset.end);
+
+                        // Update the timer every second for each element
+                        var timerInterval = setInterval(function () 
                         {
-                            timeRemaining = "Ended";
-                        }
-                        else
-                        {
-                            timeRemaining = timeRemaining.Substring(0, timeRemaining.LastIndexOf("."));
-                        }
-                }
-                    @Html.DisplayFor(modelItem => timeRemaining)
+                            // Get the current date and time
+                            var currentDate = new Date();
+
+                            // Calculate the time difference in seconds
+                            var timeDifference = Math.floor((endDate - currentDate) / 1000);
+
+                            if (timeDifference > 0) 
+                            {
+                                var hours = Math.floor(timeDifference / (60 * 60));
+                                var minutes = Math.floor((timeDifference % (60 * 60)) / 60);
+                                var seconds = timeDifference % 60;
+
+                                // Display the timer in the current timer element
+                                element.innerHTML = `${hours} hours, ${minutes} minutes, ${seconds} seconds`;
+                            }
+                            else
+                            {
+                                    // Display "Timer expired!" when the timer reaches 0
+                                    element.innerHTML = "00:00:00";
+
+                                    // Clear the interval to stop updating the timer
+                                    clearInterval(timerInterval);
+                            }  
+                        }, 1000);
+                    });
+                </script>
             </td>
+
             <td>
                 @Html.DisplayFor(modelItem => item.HuntStatus)
             
@@ -110,18 +138,18 @@
                         var timeRemaining2 = (item.EndDate - DateTime.Now).ToString();
                         if (TimeSpan.Parse(timeRemaining2).Seconds > 0)
                         {
-                            <p>
-                                @Html.ActionLink("Edit", "Update", new { id = item.Id }) |
-                                @Html.ActionLink("View Hunt", "ViewTasks", new { id = item.Id }) |
-                                @Html.ActionLink("Delete Hunt", "Delete", new { id = item.Id })
-                            </p>
+                                                <p>
+                                                    @Html.ActionLink("Edit", "Update", new { id = item.Id }) |
+                                                    @Html.ActionLink("View Hunt", "ViewTasks", new { id = item.Id }) |
+                                                    @Html.ActionLink("Delete Hunt", "Delete", new { id = item.Id })
+                                                </p>
                         }
                         else
                         {
-                            <p>
-                                @Html.ActionLink("View Hunt", "ViewTasks", new { id = item.Id }) |
-                                @Html.ActionLink("Delete Hunt", "Delete", new { id = item.Id })
-                            </p>
+                                                <p>
+                                                    @Html.ActionLink("View Hunt", "ViewTasks", new { id = item.Id }) |
+                                                    @Html.ActionLink("Delete Hunt", "Delete", new { id = item.Id })
+                                                </p>
                         }
                     }
             </td>
