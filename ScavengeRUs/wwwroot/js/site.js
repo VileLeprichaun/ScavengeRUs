@@ -71,7 +71,18 @@ $(document).ready(function () {
     });
 });
 
+/*
+    This method takes options from the dropdown menu and filters the table using the search bar.
+    If any records match the filter, they will be the only ones shown in the table.
+ */
 function filterRows() {
+    var statusFilter = document.getElementById("hunt-status").value.toUpperCase();
+    var table = $('#hunt-table').DataTable();
+    table.search(statusFilter).draw();
+}
+
+
+/*function filterRows() {
     var statusFilter = document.getElementById("hunt-status").value.toUpperCase();
     var table = document.getElementById("hunt-table");
     var rows = table.getElementsByTagName("tr");
@@ -88,7 +99,7 @@ function filterRows() {
             }
         }
     }
-}
+}*/
 
 /*
  * Get the user's location async.
