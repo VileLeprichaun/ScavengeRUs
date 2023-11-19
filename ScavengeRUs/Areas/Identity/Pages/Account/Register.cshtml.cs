@@ -84,11 +84,11 @@ namespace ScavengeRUs.Areas.Identity.Pages.Account
             [Display(Name = "Email")]
             public string Email { get; set; }
 
-            
+            //set first name as empty string instead of null
             [Display(Name ="First Name")]
             public string FirstName { get; set; } = String.Empty;
 
-            
+            //set last name as empty string instead of null
             [Display(Name = "Last Name")]
             public string LastName { get; set; } = String.Empty;
 

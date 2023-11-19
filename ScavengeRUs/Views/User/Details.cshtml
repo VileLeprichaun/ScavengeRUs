@@ -4,7 +4,14 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details of @Model.FirstName @Model.LastName's account</h1>
+<!--Check to see if Firstname is not Null and since attribute is set to String.empty: checks if it is left empty.-->
+    @if (Model.FirstName != null && !string.IsNullOrEmpty(Model.FirstName))
+    {
+    <h1>Details of @Model.FirstName @Model.LastName's account</h1>
+    }else{
+
+    <h1>Details of Guest @Model.PhoneNumber</h1>
+    }
 
 <div>
     <hr />
