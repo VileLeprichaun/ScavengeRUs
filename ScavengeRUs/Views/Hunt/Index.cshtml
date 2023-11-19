@@ -11,7 +11,9 @@
     <a asp-controller="locations" asp-action="Index" style="padding-right: 3px">Manage All Tasks</a> |
     <a asp-controller="User" asp-action="Manage" style="padding-left: 3px">Back to Admin Portal</a>
 </p>
-<table class="table">
+<p>
+</p>
+<table id="hunt-table" class="table">
     <thead>
         <tr>
 @*            <th>
@@ -30,7 +32,7 @@
                 @Html.DisplayNameFor(model => model.EndDate)
             </th>
             <th>
-                Time Remaining
+                <p>Time Remaining</p>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.HuntStatus)
@@ -42,7 +44,15 @@
                 @Html.DisplayNameFor(model => model.HuntLocations)
             </th>
             
-            <th></th>
+            
+            <th>
+                <select class="table-filter" id="hunt-status" onchange="filterRows()">
+                    <option value="">Show all</option>
+                    <option value="Active">Active</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Ended">Ended</option>
+                </select>
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -63,40 +73,71 @@
             <td>
                 @Html.DisplayFor(modelItem => item.EndDate)
             </td>
+
             <td>
-                    @{
-                        var timeRemaining = (item.EndDate - DateTime.Now).ToString();
-                        if (TimeSpan.Parse(timeRemaining).Seconds<0)
+                <div class="timer" data-start="@item.StartDate.ToString("")" data-end="@item.EndDate.ToString("")"></div>
+                <script>
+                    // Get all elements with class "timer"
+                    var timerElements = document.getElementsByClassName("timer");
+
+                    // Loop through each timer element
+                    Array.from(timerElements).forEach(function (element) 
+                    {
+                        // Get the EndDate from the data attribute
+                        var endDate = new Date(element.dataset.end);
+
+                        // Update the timer every second for each element
+                        var timerInterval = setInterval(function () 
                         {
-                            timeRemaining = "Ended";
-                        }
-                        else
-                        {
-                            timeRemaining = timeRemaining.Substring(0, timeRemaining.LastIndexOf("."));
-                        }
-                }
-                    @Html.DisplayFor(modelItem => timeRemaining)
+                            // Get the current date and time
+                            var currentDate = new Date();
+
+                            // Calculate the time difference in seconds
+                            var timeDifference = Math.floor((endDate - currentDate) / 1000);
+
+                            if (timeDifference > 0) 
+                            {
+                                var hours = Math.floor(timeDifference / (60 * 60));
+                                var minutes = Math.floor((timeDifference % (60 * 60)) / 60);
+                                var seconds = timeDifference % 60;
+
+                                // Display the timer in the current timer element
+                                element.innerHTML = `${hours} hours, ${minutes} minutes, ${seconds} seconds`;
+                            }
+                            else
+                            {
+                                // Display "Timer expired!" when the timer reaches 0
+                                element.innerHTML = "00:00:00";
+                                // Clear the interval to stop updating the timer
+                                clearInterval(timerInterval);
+                            }  
+                        }, 1000);
+                    });
+                </script>
             </td>
+
             <td>
-                @Html.DisplayFor(modelItem => item.HuntStatus)
             
                     @{
                         var huntStatus = "";
-                        
+
                         if (DateTime.Now < item.StartDate)
                         {
                             huntStatus = "Pending";
+                            item.HuntStatus = huntStatus;
                         }
                         else if(DateTime.Now >= item.StartDate && DateTime.Now < item.EndDate)
                         {
                             huntStatus = "Active";
+                            item.HuntStatus = huntStatus;
                         }
                         else
                         {
                             huntStatus = "Ended";
+                            item.HuntStatus = huntStatus;
                         }
-                        
                     }
+
                     @Html.DisplayFor(modelItem => huntStatus)
             </td>
             <td>
@@ -123,7 +164,7 @@
                                 @Html.ActionLink("Delete Hunt", "Delete", new { id = item.Id })
                             </p>
                         }
-                    }
+                        }
             </td>
         </tr>
 }
