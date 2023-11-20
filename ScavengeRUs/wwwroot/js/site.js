@@ -61,6 +61,7 @@ $(document).ready(function () {
             { "Manage": "ninth", "orderable": false },
         ]
     });
+    originalOrder = table.order();
 });
 
 $(document).ready(function () {
@@ -81,6 +82,30 @@ function filterRows() {
     table.search(statusFilter).draw();
 }
 
+function clearFilters() {
+    var table = $('#hunt-table').DataTable();
+    table.search('').draw();
+    table.order([]).draw();
+    table.destroy();
+    // reinitialize the table
+    $('#hunt-table').DataTable({
+        "scrolly": "450px",
+        "scrollCollapse": true,
+        "paging": true,
+        "columns": [
+            { "CreationDate": "first", "orderable": true },
+            { "Title": "second", "orderable": true },
+            { "Start Date/Time": "third", "orderable": true },
+            { "End Date/Time": "fourth", "orderable": true },
+            { "Time Remaining": "fifth", "orderable": true },
+            { "Status": "sixth", "orderable": false },
+            { "Players": "seventh", "orderable": true },
+            { "Tasks": "eighth", "orderable": true },
+            { "Manage": "ninth", "orderable": false },
+        ]
+    });
+
+}
 
 /*function filterRows() {
     var statusFilter = document.getElementById("hunt-status").value.toUpperCase();
