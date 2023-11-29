@@ -78,14 +78,14 @@
             <td>
                 <div class="timer" data-start="@item.StartDate.ToString("")" data-end="@item.EndDate.ToString("")"></div>
                 <script>
-                    // Get all elements with class "timer"
-                    var timerElements = document.getElementsByClassName("timer");
-
-                    // Loop through each timer element
                     Array.from(timerElements).forEach(function (element) 
                     {
-                        // Get the EndDate from the data attribute
+                        // Get the StartDate and EndDate from the data attributes
+                        var startDate = new Date(element.dataset.start);
                         var endDate = new Date(element.dataset.end);
+
+                        // Determine if the countdown should start immediately or if it's pending
+                        var isPending = startDate > new Date();
 
                         // Update the timer every second for each element
                         var timerInterval = setInterval(function () 
@@ -93,25 +93,34 @@
                             // Get the current date and time
                             var currentDate = new Date();
 
-                            // Calculate the time difference in seconds
-                            var timeDifference = Math.floor((endDate - currentDate) / 1000);
-
-                            if (timeDifference > 0) 
+                            if (isPending && startDate > currentDate) 
                             {
-                                var hours = Math.floor(timeDifference / (60 * 60));
-                                var minutes = Math.floor((timeDifference % (60 * 60)) / 60);
-                                var seconds = timeDifference % 60;
-
-                                // Display the timer in the current timer element
-                                element.innerHTML = `${hours} hours, ${minutes} minutes, ${seconds} seconds`;
+                                // Display "Pending" until the StartDate occurs
+                                element.innerHTML = "Pending";
                             }
-                            else
+                            else 
                             {
-                                // Display "Timer expired!" when the timer reaches 0
-                                element.innerHTML = "00:00:00";
-                                // Clear the interval to stop updating the timer
-                                clearInterval(timerInterval);
-                            }  
+                                // Calculate the time difference in seconds
+                                var timeDifference = Math.floor((endDate - currentDate) / 1000);
+
+                                if (timeDifference > 0) 
+                                {
+                                    var hours = Math.floor(timeDifference / (60 * 60));
+                                    var minutes = Math.floor((timeDifference % (60 * 60)) / 60);
+                                    var seconds = timeDifference % 60;
+
+                                    // Display the timer in the current timer element
+                                    element.innerHTML = `${hours} hours, ${minutes} minutes, ${seconds} seconds`;
+                                }
+                                else 
+                                {
+                                    // Display "Timer expired!" when the timer reaches 0
+                                    element.innerHTML = "00:00:00";
+
+                                    // Clear the interval to stop updating the timer
+                                    clearInterval(timerInterval);
+                                }
+                            }
                         }, 1000);
                     });
                 </script>
