@@ -13,14 +13,14 @@ namespace ScavengeRUs.Models.Entities
     /// </summary>
     public class ApplicationUser : IdentityUser
     {
-        
+        [Required]
         [DisplayName("First Name")]
         [StringLength(50)]
-        public string? FirstName { get; set; } = String.Empty;
+        public string? FirstName { get; set; }
         [DisplayName("Last Name")]
         [StringLength(50)]
-
-        public string? LastName { get; set; } = String.Empty;
+        [Required]
+        public string? LastName { get; set; }
         public AccessCode? AccessCode { get; set; }
         [DisplayName("Registered Hunt")]
         public Hunt? Hunt{ get; set; }

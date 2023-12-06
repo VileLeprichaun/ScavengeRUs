@@ -5,17 +5,8 @@ displays their name, profile picture and username-->
 @{
     ViewData["Title"] = "Profile";
 }
-<!--Check to see if Firstname is not Null and since attribute is set to String.empty: checks if it is left empty.-->
-@if (Model.FirstName != null && !string.IsNullOrEmpty(Model.FirstName))
-{
-    <h1>@Model.FirstName @Model.LastName</h1>
-}
-else
-{
-  <h1>Guest @Model.PhoneNumber</h1>  
-}
 
-
+<h1>@Model.FirstName @Model.LastName</h1>
 <p>placeholder for profile picture</p>
 <div>
     <hr />
