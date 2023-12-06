@@ -28,8 +28,11 @@ namespace ScavengeRUs.Models.Entities
         public DateTime StartDate{ get; set; }
         [DisplayName("End Date/Time"), Required]
         public DateTime EndDate { get; set; }
+<<<<<<< HEAD
         [DisplayName("Status"), Required]
         public string? HuntStatus { get; set; }
+=======
+>>>>>>> master
         [DisplayName("Tasks")]
         public ICollection<HuntLocation> HuntLocations { get; set; } = new List<HuntLocation>();  
         [DisplayName("Access Code")]
