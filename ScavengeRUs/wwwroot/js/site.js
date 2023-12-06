@@ -42,6 +42,7 @@
  * An example use can be seen in Questions/Index.cshtml.
  */
 
+
 // Used to create the filters for the User and Hunt tables
 // You could put this in a function to make it more dynamic
 // https://datatables.net/download/
@@ -126,6 +127,7 @@ function clearFilters() {
         }
     }
 }*/
+
 
 /*
  * Get the user's location async.

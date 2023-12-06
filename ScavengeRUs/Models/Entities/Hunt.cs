@@ -15,9 +15,9 @@ namespace ScavengeRUs.Models.Entities
         {
             CreationDate = DateTime.Now;
         }
-
         public int Id { get; set; }
         public DateTime CreationDate { get; set; }
+
         [DisplayName("Title"), Required]
         public string? HuntName { get; set; }
         [Required]
@@ -28,8 +28,6 @@ namespace ScavengeRUs.Models.Entities
         public DateTime StartDate{ get; set; }
         [DisplayName("End Date/Time"), Required]
         public DateTime EndDate { get; set; }
-        [DisplayName("Status"), Required]
-        public string? HuntStatus { get; set; }
         [DisplayName("Tasks")]
         public ICollection<HuntLocation> HuntLocations { get; set; } = new List<HuntLocation>();  
         [DisplayName("Access Code")]

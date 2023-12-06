@@ -8,19 +8,11 @@
 {
     var user = await userRepo.ReadAsync(User.Identity?.Name!);
     var fullName = $"{user!.FirstName} {user!.LastName}";
-    //Check if the first name is not empty
-        @if (user.FirstName != null )
-    {
-
+    
     <li class="nav-item">
         <a  class="nav-link text-dark" asp-area="Identity" title="Manage">Hello @fullName!</a>
     </li>
-    }else{
-       
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" title="Manage">Hello Guest @user.PhoneNumber!</a>
-        </li>
-    }
+     
     <li class="nav-item">
             @if (User.IsInRole("Admin"))
             {

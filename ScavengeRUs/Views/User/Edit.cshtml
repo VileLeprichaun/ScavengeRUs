@@ -5,14 +5,8 @@
 @{
     ViewData["Title"] = "Edit";
 }
-<!--Check to see if Firstname is not Null and since attribute is set to String.empty: checks if it is left empty.-->
-@if (Model.FirstName != null && !string.IsNullOrEmpty(Model.FirstName))
-{
-    <h1>Editing @Model.FirstName @Model.LastName's account</h1>
-}else
-{
-<h1>Editing Guest @Model.PhoneNumber</h1>
-}
+
+<h1>Editing @Model.FirstName @Model.LastName's account</h1>
 <hr />
 <div class="row">
     <div class="col-md-4">

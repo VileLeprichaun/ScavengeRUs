@@ -55,25 +55,6 @@ namespace ScavengeRUs.Controllers
             if (ModelState.IsValid)
             {
                 hunt.CreationDate = DateTime.Now;
-
-                var huntStatus = "";
-
-                if (DateTime.Now < hunt.StartDate)
-                {
-                    huntStatus = "Pending";
-                    hunt.HuntStatus = huntStatus;
-                }
-                else if (DateTime.Now >= hunt.StartDate && DateTime.Now < hunt.EndDate)
-                {
-                    huntStatus = "Active";
-                    hunt.HuntStatus = huntStatus;
-                }
-                else
-                {
-                    huntStatus = "Ended";
-                    hunt.HuntStatus = huntStatus;
-                }
-
                 await _huntRepo.CreateAsync(hunt);
                 return RedirectToAction("Index");
             }
@@ -173,7 +154,7 @@ namespace ScavengeRUs.Controllers
 
             if (huntId == 0)
             {
-                return RedirectToAction("Index");
+                RedirectToAction("Index");
             }
             var hunt = await _huntRepo.ReadAsync(huntId);
             var existingUser = await _userRepo.ReadAsync(user.Email);
@@ -192,7 +173,7 @@ namespace ScavengeRUs.Controllers
                 newUser = existingUser;
                 newUser.AccessCode = user.AccessCode;
             }
-            if (newUser.AccessCode == null)       //If the admin didn't specify an access code (If we need to, I have the field readonly currently)
+            if (newUser.AccessCode!.Code == null)       //If the admin didn't specify an access code (If we need to, I have the field readonly currently)
             {
                 newUser.AccessCode = new AccessCode()
                 {
@@ -347,7 +328,5 @@ namespace ScavengeRUs.Controllers
             _huntRepo.Update(id, hunt);
             return RedirectToAction("Index");
         }
-
-        
     }
 }
