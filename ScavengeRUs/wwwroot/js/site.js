@@ -43,6 +43,7 @@
  */
 
 // Used to create the filters for the User and Hunt tables
+// You could put this in a function to make it more dynamic
 // https://datatables.net/download/
 $(document).ready(function () {
     $('#hunt-table').DataTable({
